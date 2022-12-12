@@ -6,7 +6,7 @@ import { Project, Prisma } from '@prisma/client';
 export class ProjectsService {
   constructor(private prisma: PrismaService) {}
 
-  async users(): Promise<Project[]> {
+  async projects(): Promise<Project[]> {
     return this.prisma.project.findMany({
       include: {
         projectHistory: true,

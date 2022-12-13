@@ -1,8 +1,6 @@
 import { PrismaClient, Prisma } from '@prisma/client';
 const prisma = new PrismaClient();
 
-
-
 // モデル投入用のデータ定義
 const userData: Prisma.EngineerUncheckedCreateInput[] = [
   {
@@ -32,24 +30,29 @@ const projectData: Prisma.ProjectUncheckedCreateInput[] = [
     projectName: '山田商店自動決済プロジェクト',
     startDate: new Date(2017, 8, 24),
     endDate: null,
-    endUser: '山田商店'
+    endUser: '山田商店',
   },
 ];
 
-const projectHistoryData: Prisma.EngineerProjectHistoryUncheckedCreateInput[] = [
-  {
-    startDate: new Date(2017, 8, 24),
-    endDate: null,
-    projectId: 1,
-    engineerId:1,
-  },
-  {
-    startDate: new Date(2017, 8, 24),
-    endDate: null,
-    projectId: 1,
-    engineerId:2,
-  },
-];
+const projectHistoryData: Prisma.EngineerProjectHistoryUncheckedCreateInput[] =
+  [
+    {
+      startDate: new Date(2017, 8, 24),
+      endDate: null,
+      sales: 100,
+      cost: 50,
+      projectId: 1,
+      engineerId: 1,
+    },
+    {
+      startDate: new Date(2017, 8, 24),
+      endDate: null,
+      sales: 100,
+      cost: 50,
+      projectId: 1,
+      engineerId: 2,
+    },
+  ];
 
 const transferUser = async () => {
   const users = [];

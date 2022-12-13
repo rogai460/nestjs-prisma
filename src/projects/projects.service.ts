@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { Project, Prisma } from '@prisma/client';
+import { EngineerProjectHistory, Prisma } from '@prisma/client';
 
 @Injectable()
 export class ProjectsService {
   constructor(private prisma: PrismaService) {}
 
-  async projects(): Promise<Project[]> {
-    return this.prisma.project.findMany({
+  async projects(): Promise<EngineerProjectHistory[]> {
+    return this.prisma.engineerProjectHistory.findMany({
       include: {
-        projectHistory: true,
+        project: true,
+        engineer: true,
       },
     });
   }

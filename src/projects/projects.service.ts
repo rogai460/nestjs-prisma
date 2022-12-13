@@ -2,11 +2,35 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { Project, Prisma } from '@prisma/client';
 
+export interface ProjectResponse {
+  projectId: number;
+  projectNameMask: string;
+  projectName: string;
+  startDate: Date;
+  endDate: Date | null;
+  endUser: string;
+  projectHistory: ProjectHistoryResponse[];
+}
+
+export interface ProjectHistoryResponse {
+  startDate: Date;
+  endDate: Date | null;
+  engineerId: number;
+  sales: number;
+  cost: number;
+  lastName: string;
+  firstName: string | null;
+  lastNameKana: string | null;
+  firstNameKana: string | null;
+  sex: number;
+  company: string | null;
+}
+
 @Injectable()
 export class ProjectsService {
   constructor(private prisma: PrismaService) {}
 
-  async projects(): Promise<Project[]> {
+  async projects(): Promise<ProjectResponse[]> {
     const findProject = this.prisma.project.findMany({
       include: {
         projectHistory: {
@@ -27,10 +51,17 @@ export class ProjectsService {
     });
 
     return (await findProject).map((fp) => ({
-      ...fp,
+      projectId: fp.id,
+      projectNameMask: fp.projectNameMask,
+      projectName: fp.projectName,
+      startDate: fp.startDate,
+      endDate: fp.endDate,
+      endUser: fp.endUser,
       projectHistory: fp.projectHistory.map((ph) => ({
         startDate: ph.startDate,
         endDate: ph.endDate,
+        sales: ph.sales,
+        cost: ph.cost,
         engineerId: ph.engineerId,
         lastName: ph.engineer.lastName,
         firstName: ph.engineer.firstName,

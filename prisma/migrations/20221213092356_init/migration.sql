@@ -43,12 +43,14 @@ CREATE TABLE "EngineerProjectHistory" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "startDate" DATETIME NOT NULL,
     "endDate" DATETIME,
+    "sales" INTEGER NOT NULL,
+    "cost" INTEGER NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "projectId" INTEGER,
-    "engineerId" INTEGER,
-    CONSTRAINT "EngineerProjectHistory_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT "EngineerProjectHistory_engineerId_fkey" FOREIGN KEY ("engineerId") REFERENCES "Engineer" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+    "projectId" INTEGER NOT NULL,
+    "engineerId" INTEGER NOT NULL,
+    CONSTRAINT "EngineerProjectHistory_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "EngineerProjectHistory_engineerId_fkey" FOREIGN KEY ("engineerId") REFERENCES "Engineer" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateIndex

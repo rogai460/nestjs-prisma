@@ -18,11 +18,11 @@ export interface ProjectHistoryResponse {
   engineerId: number;
   sales: number;
   cost: number;
-  lastName: string;
-  firstName: string | null;
-  lastNameKana: string | null;
-  firstNameKana: string | null;
-  sex: number;
+  profit: number;
+  profitRate: number;
+  fullName: string;
+  fullNameKana: string | null;
+  sex: string | null;
   company: string | null;
 }
 
@@ -62,12 +62,12 @@ export class ProjectsService {
         endDate: ph.endDate,
         sales: ph.sales,
         cost: ph.cost,
+        profit: ph.sales - ph.cost,
+        profitRate: (ph.sales - ph.cost) / ph.sales,
         engineerId: ph.engineerId,
-        lastName: ph.engineer.lastName,
-        firstName: ph.engineer.firstName,
-        lastNameKana: ph.engineer.lastNameKana,
-        firstNameKana: ph.engineer.firstNameKana,
-        sex: ph.engineer.sex,
+        fullName: `${ph.engineer.lastName} ${ph.engineer.firstName}`,
+        fullNameKana: `${ph.engineer.lastNameKana} ${ph.engineer.firstNameKana}`,
+        sex: ph.engineer.sex == 0 ? '男' : '女',
         company: ph.engineer.company,
       })),
     }));
